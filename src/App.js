@@ -1,102 +1,102 @@
-// import { useState } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faPinterest } from "@fortawesome/free-brands-svg-icons";
-// import { faSave } from "@fortawesome/free-solid-svg-icons";
-
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPinterest } from "@fortawesome/free-brands-svg-icons";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { openNewWindowHandler } from "./components/common/Reusable";
 import "./App.css";
+import { IMAGES_LIST } from "./components/common/Helper";
 
 function App() {
-  // const [hover, setHover] = useState(false);
-  // const [hoverBtn, setHoverBtn] = useState(false);
-
-  // const openNewWindowHandler = () => {
-  //   const width = 800;
-  //   const height = 600;
-  //   const left = window.screen.width / 2 - width / 2;
-  //   const top = window.screen.height / 2 - height / 2;
-
-  //   // Open a new window with initial dimensions
-  //   const newWindow = window.open(
-  //     "https://in.pinterest.com/pin-builder/?description=Indistractable+traction+distraction+triggers+diagram&is_video=false&media=https%3A%2F%2Fwww.nirandfar.com%2Fwp-content%2Fuploads%2F2019%2F05%2FIndistractable-traction-distraction-triggers-diagram.jpg&method=bookmarklet&url=https%3A%2F%2Fwww.nirandfar.com%2Findistractable-tools",
-  //     "popup",
-  //     `width=${width},height=${height},top=${top},left=${left},resizable,scrollbars,status`
-  //   );
-
-  //   if (newWindow) {
-  //     newWindow.focus();
-  //   }
-  // };
+  const [hoverActive, setHoverActive] = useState({
+    hover: false,
+    hoverIcon: false,
+    hoverIndex: null,
+  });
 
   return (
-    <>
-      {/* <div
-        style={{ position: "relative", width: "800px" }}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        <img
-          style={{ maxWidth: "100%", width: "100%" }}
-          src="https://www.nirandfar.com/wp-content/uploads/2019/05/Indistractable-traction-distraction-triggers-diagram.jpg.webp"
-          alt="example"
-        />
-        {hover ? (
-          <a
-            onClick={() => openNewWindowHandler()}
-            onMouseEnter={() => setHoverBtn(true)}
-            onMouseLeave={() => setHoverBtn(false)}
-            id="save_btn"
+    <div
+      style={{ display: "flex", justifyContent: "center", paddingTop: "20px" }}
+    >
+      {IMAGES_LIST.map((obj, i) => {
+        return (
+          <div
+            key={i}
             style={{
-              border: "none",
-              color: "white",
-              paddingLeft: "30px",
-              paddingRight: "30px",
-              borderRadius: "5px",
-              paddingTop: "8px",
-              paddingBottom: "8px",
-              fontWeight: "bold",
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
-              top: "40px",
-              backgroundColor: "blue",
+              position: "relative",
+              width: "200px",
+              marginRight: "30px",
+              height: "250px",
             }}
+            onMouseEnter={() =>
+              setHoverActive({
+                hover: true,
+                hoverIcon: hoverActive.hoverIcon,
+                hoverIndex: i,
+              })
+            }
+            onMouseLeave={() =>
+              setHoverActive({
+                hover: false,
+                hoverIcon: hoverActive.hoverIcon,
+                hoverIndex: null,
+              })
+            }
           >
-            {hoverBtn ? (
-              <FontAwesomeIcon icon={faSave} style={{ marginRight: "15px" }} />
-            ) : (
-              <FontAwesomeIcon
-                icon={faPinterest}
-                style={{ marginRight: "15px" }}
-              />
-            )}
-            Save
-          </a>
-        ) : (
-          ""
-        )}
-      </div> */}
-      <form name="contact" method="POST" data-netlify="true">
-  <p>
-    <label>Your Name: <input type="text" name="name" /></label>
-  </p>
-  <p>
-    <label>Your Email: <input type="email" name="email" /></label>
-  </p>
-  <p>
-    <label>Your Role: <select name="role[]" multiple>
-      <option value="leader">Leader</option>
-      <option value="follower">Follower</option>
-    </select></label>
-  </p>
-  <p>
-    <label>Message: <textarea name="message"></textarea></label>
-  </p>
-  <p>
-    <button type="submit">Send</button>
-  </p>
-</form>
-
-    </>
+            <img
+              style={{ height: "100%", width: "100%", objectFit: "cover",objectPosition:"top" }}
+              src={obj.images}
+              alt="example"
+            />
+            {hoverActive.hover && hoverActive.hoverIndex === i ? (
+              <a
+                onClick={() => openNewWindowHandler(obj.url)}
+                onMouseEnter={() =>
+                  setHoverActive({
+                    ...hoverActive,
+                    hoverIcon: true,
+                  })
+                }
+                onMouseLeave={() =>
+                  setHoverActive({
+                    ...hoverActive,
+                    hoverIcon: false,
+                  })
+                }
+                id="save_btn"
+                style={{
+                  border: "none",
+                  color: "white",
+                  paddingLeft: "16px",
+                  paddingRight: "16px",
+                  borderRadius: "5px",
+                  paddingTop: "8px",
+                  paddingBottom: "8px",
+                  fontWeight: "bold",
+                  position: "absolute",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  top: "40px",
+                  backgroundColor: "blue",
+                }}
+              >
+                {hoverActive.hoverIcon ? (
+                  <FontAwesomeIcon
+                    icon={faSave}
+                    style={{ marginRight: "15px" }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faPinterest}
+                    style={{ marginRight: "15px" }}
+                  />
+                )}
+                Save
+              </a>
+            ) : null}
+          </div>
+        );
+      })}
+    </div>
   );
 }
 

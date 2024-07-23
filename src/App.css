@@ -8,5 +8,7 @@
 
 #save_btn:hover {
   background-color: rgb(166, 16, 16);
-  /* Background color when hovered */
+}
+body{
+background-color:  black;
 }
